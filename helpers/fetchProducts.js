@@ -1,10 +1,9 @@
-const url = 'https://api.mercadolibre.com/sites/MLB/search?q=$computador';
-// const url = (categoria) => `https://api.mercadolibre.com/sites/MLB/search?q=$computador`;
+// const url = (`https://api.mercadolibre.com/sites/MLB/search?q=${param}`); //! pq nao funciona?
 // A lista de produtos que devem ser exibidos é o array results no JSON acima.
-const fetchProducts = async () => {
-  const aurl = await fetch(url);
-    const a = await aurl.json();
-    // a.then((data) => data).catch((error) => error);
+const fetchProducts = async (param) => {
+  const aurl = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${param}`);
+    const a = await aurl.json()
+    .then((data) => data).catch((error) => error);
     return a.results;
 };
 console.log(fetchProducts());

@@ -24,8 +24,8 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) { 
 }
 
 function getSkuFromProductItem(item) {
-  // return item.querySelector('span.item__sku').innerText;
-  console.log(item);
+ // return item.querySelector('span.item__sku').innerText;
+  // console.log(item);
 }
 getSkuFromProductItem();
 
@@ -42,7 +42,7 @@ function createCartItemElement({ sku, name, salePrice }) {
 }
 async function retornaComputador() {
   const pegaItems = document.querySelector('.items');
-  const pegaResultados = await fetchProducts(); // CUIDADO
+  const pegaResultados = await fetchProducts('computador'); // CUIDADO
   pegaResultados.forEach((produto) => {
      const resultado = createProductItemElement(produto);
      console.log(produto);
