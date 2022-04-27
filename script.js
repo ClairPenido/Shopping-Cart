@@ -24,12 +24,13 @@ function createProductItemElement({ id: sku, title: name, thumbnail: image }) { 
 }
 
 function getSkuFromProductItem(item) {
-  return item.querySelector('span.item__sku').innerText;
+  // return item.querySelector('span.item__sku').innerText;
+  console.log(item);
 }
 getSkuFromProductItem();
 
 function cartItemClickListener(event) {
-  return 'alo';
+  return event;
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
