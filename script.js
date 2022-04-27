@@ -43,14 +43,21 @@ function createCartItemElement({ sku, name, salePrice }) {
 async function retornaComputador() {
   const pegaItems = document.querySelector('.items');
   const pegaResultados = await fetchProducts('computador'); // CUIDADO
-  pegaResultados.forEach((produto) => {
+  pegaResultados.results.forEach((produto) => {
      const resultado = createProductItemElement(produto);
      console.log(produto);
-     pegaItems.append(resultado);
+     pegaItems.appendChild(resultado);
     });
-  console.log('aqui', pegaResultados);
+  // console.log('aqui', pegaResultados);
   return pegaResultados;
   }
   retornaComputador();
 
+  async function retornaIDItem() {
+  const pegaResultadosID = await fetchItem('MLB1341706310');
+  return pegaResultadosID;
+  };
+    // console.log('aqui', pegaResultados);
+
+retornaIDItem();
 window.onload = () => { };
