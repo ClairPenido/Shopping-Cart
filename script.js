@@ -1,4 +1,3 @@
-// comentario 
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -13,24 +12,24 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ sku, name, image }) {
-  const section = document.createElement('section');
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) { // passar proprio objeto como parametro
+  const section = document.createElement('section'); // sku = id - name = title - image = thumbnail 
   section.className = 'item';
 
-  section.appendChild(createCustomElement('span', 'item__sku', sku));
+  section.appendChild(createCustomElement('span', 'item__sku', sku)); // codigo unico de identificação do produto 
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'));
-
   return section;
 }
 
 function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 }
+getSkuFromProductItem();
 
 function cartItemClickListener(event) {
-  // coloque seu código aqui
+  return 'alo';
 }
 
 function createCartItemElement({ sku, name, salePrice }) {
@@ -40,5 +39,17 @@ function createCartItemElement({ sku, name, salePrice }) {
   li.addEventListener('click', cartItemClickListener);
   return li;
 }
+async function retornaComputador() {
+  const pegaItems = document.querySelector('.items');
+  const pegaResultados = await fetchProducts(); // CUIDADO
+  pegaResultados.forEach((produto) => {
+     const resultado = createProductItemElement(produto);
+     console.log(produto);
+     pegaItems.append(resultado);
+    });
+  console.log('aqui', pegaResultados);
+  return pegaResultados;
+  }
+  retornaComputador();
 
 window.onload = () => { };
