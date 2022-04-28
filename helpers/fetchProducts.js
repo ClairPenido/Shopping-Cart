@@ -9,7 +9,6 @@ const fetchProducts = async (param) => {
   return error;
 }
 };
-// console.log(fetchProducts()); 
 
 if (typeof module !== 'undefined') {
   module.exports = {
