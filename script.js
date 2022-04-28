@@ -28,7 +28,8 @@ function getSkuFromProductItem(item) {
 }
 
 function cartItemClickListener(event) {
-
+// Ao clicar no produto no carrinho de compra, ele deve ser removido da lista.
+event.target.remove();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -53,10 +54,10 @@ async function retornaComputador(param) {
   const pegaLista = document.querySelector('.cart__items');
   pegaBotao.forEach((elem) => { // escutar cada botao
       elem.addEventListener('click', async (event) => {
-        const seila = getSkuFromProductItem(event.target.parentNode); 
-        const pegaID = await fetchItem(seila);
-        const aff = createCartItemElement(pegaID);
-        pegaLista.appendChild(aff);
+        const botaoClicado = getSkuFromProductItem(event.target.parentNode); // quando o click, pega o PAI que foi clicado
+        const pegaID = await fetchItem(botaoClicado);
+        const criaItemCarrinho = createCartItemElement(pegaID); // coloca na sessao do carrinho
+        pegaLista.appendChild(criaItemCarrinho);
       });
   });
 }
