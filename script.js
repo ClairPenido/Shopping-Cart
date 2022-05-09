@@ -33,17 +33,18 @@ function getSkuFromProductItem(item) {
 function cartItemClickListener(event) {
 // Ao clicar no produto no carrinho de compra, ele deve ser removido da lista.
 event.target.remove();
-saveCartItems();
+saveCartItems(pegaListaCarrinho.innerHTML);
 }
 
 function clickDenovo() { // evento do click novamente
-const pegaLista2 = document.querySelector('.cart__items'); //! nao entendi pq só funciona assim
-  const aa = Array.from(pegaLista2.children);
-  console.log(aa);
-  aa.forEach((elem) => {
+const pegaLista2 = document.querySelectorAll('.cart__item'); //! nao entendi pq só funciona assim
+  pegaLista2.forEach((elem) => {
     elem.addEventListener('click', cartItemClickListener);
-    console.log(elem);
   });
+  }
+  function pegaItemsSalvos() {
+   const listaSalva = getSavedCartItems();
+   pegaListaCarrinho.innerHTML = listaSalva;
   }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -73,15 +74,14 @@ async function retornaComputador(param) {
       loading.remove();
     });
     }  
+    function esvaziarCarrinho() {
+      pegaListaCarrinho.innerHTML = '';
+      saveCartItems(pegaListaCarrinho.innerHTML);
+    }
+    getBotaoEsvaziar.addEventListener('click', esvaziarCarrinho);
   
   function criaCarrinhoDeCompras() {
   const pegaBotao = document.querySelectorAll('.item__add');
-  
-function esvaziarCarrinho() {
-  pegaListaCarrinho.innerHTML = '';
-  saveCartItems();
-}
-getBotaoEsvaziar.addEventListener('click', esvaziarCarrinho);
 
   pegaBotao.forEach((elem) => { // escutar cada botao
       elem.addEventListener('click', async (event) => {
@@ -89,7 +89,7 @@ getBotaoEsvaziar.addEventListener('click', esvaziarCarrinho);
         const pegaID = await fetchItem(botaoClicado);
         const criaItemCarrinho = createCartItemElement(pegaID); // coloca na sessao do carrinho
         pegaListaCarrinho.appendChild(criaItemCarrinho);
-        saveCartItems();
+        saveCartItems(pegaListaCarrinho.innerHTML);
       });
   });
 }
@@ -97,6 +97,6 @@ getBotaoEsvaziar.addEventListener('click', esvaziarCarrinho);
 window.onload = async () => { 
   await carregando();
   criaCarrinhoDeCompras();
-  getSavedCartItems();
+  pegaItemsSalvos();
   clickDenovo();
 };
