@@ -1,3 +1,6 @@
+const pegaListaCarrinho = document.querySelector('.cart__items');
+const getBotaoEsvaziar = document.querySelector('.empty-cart');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -33,7 +36,7 @@ event.target.remove();
 saveCartItems();
 }
 
-function seila() {
+function clickDenovo() { // evento do click novamente
 const pegaLista2 = document.querySelector('.cart__items'); //! nao entendi pq só funciona assim
   const aa = Array.from(pegaLista2.children);
   console.log(aa);
@@ -60,26 +63,32 @@ async function retornaComputador(param) {
   return pegaResultados;
   }
   async function carregando() {
-    const pegaContainer = document.querySelector('.items');
-    const alo = document.createElement('p');
-    alo.innerText = 'carregando...';
-    alo.className = 'loading';
-    pegaContainer.appendChild(alo);
+    const pegaItems = document.querySelector('.items');
+    const loading = document.createElement('p');
+    loading.innerText = 'carregando...';
+    loading.className = 'loading';
+    pegaItems.appendChild(loading);
     await retornaComputador('computador')
     .then((resp) => {
-      alo.remove();
+      loading.remove();
     });
     }  
   
   function criaCarrinhoDeCompras() {
   const pegaBotao = document.querySelectorAll('.item__add');
-  const pegaLista = document.querySelector('.cart__items');
+  
+function esvaziarCarrinho() {
+  pegaListaCarrinho.innerHTML = '';
+  saveCartItems();
+}
+getBotaoEsvaziar.addEventListener('click', esvaziarCarrinho);
+
   pegaBotao.forEach((elem) => { // escutar cada botao
       elem.addEventListener('click', async (event) => {
         const botaoClicado = getSkuFromProductItem(event.target.parentNode); // quando o click, pega o PAI que foi clicado
         const pegaID = await fetchItem(botaoClicado);
         const criaItemCarrinho = createCartItemElement(pegaID); // coloca na sessao do carrinho
-        pegaLista.appendChild(criaItemCarrinho);
+        pegaListaCarrinho.appendChild(criaItemCarrinho);
         saveCartItems();
       });
   });
@@ -89,5 +98,5 @@ window.onload = async () => {
   await carregando();
   criaCarrinhoDeCompras();
   getSavedCartItems();
-  seila();
+  clickDenovo();
 };
