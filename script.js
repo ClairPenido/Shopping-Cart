@@ -1,3 +1,6 @@
+const pegaBotao = document.querySelectorAll('.item__add');
+const pegaLista = document.querySelector('.cart__items');
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -31,6 +34,12 @@ function cartItemClickListener(event) {
 // Ao clicar no produto no carrinho de compra, ele deve ser removido da lista.
 event.target.remove();
 }
+function seila() {
+  const aa = Array.from(pegaLista.children);
+  aa.forEach((elem) => {
+    elem.addEventListener('click', cartItemClickListener);
+  });
+  }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li'); // id = id - título = title - preço = price
@@ -50,14 +59,13 @@ async function retornaComputador(param) {
   }
   
   function criaCarrinhoDeCompras() {
-  const pegaBotao = document.querySelectorAll('.item__add');
-  const pegaLista = document.querySelector('.cart__items');
   pegaBotao.forEach((elem) => { // escutar cada botao
       elem.addEventListener('click', async (event) => {
         const botaoClicado = getSkuFromProductItem(event.target.parentNode); // quando o click, pega o PAI que foi clicado
         const pegaID = await fetchItem(botaoClicado);
         const criaItemCarrinho = createCartItemElement(pegaID); // coloca na sessao do carrinho
         pegaLista.appendChild(criaItemCarrinho);
+        saveCartItems();
       });
   });
 }
@@ -65,4 +73,5 @@ async function retornaComputador(param) {
 window.onload = async () => { 
   await retornaComputador('computador');
   criaCarrinhoDeCompras();
+  getSavedCartItems();
 };
